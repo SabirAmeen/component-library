@@ -4,11 +4,15 @@ import { Input } from './components/ui/Input'
 import { Checkbox } from './components/ui/Checkbox'
 import { Radio } from './components/ui/Radio'
 import { SelectBox } from './components/ui/SelectBox'
-import { Moon, Sun, CheckCircle, Info, AlertTriangle } from 'lucide-react'
+import { Moon, Sun, CheckCircle, Info, AlertTriangle, Terminal } from 'lucide-react'
+import { Toaster } from './components/ui/Toaster'
+import { toast } from './hooks/use-toast'
+import type { ToasterPosition } from './components/ui/Toaster'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [toastPosition, setToastPosition] = useState<ToasterPosition>('bottom-right')
 
   const toggleLoading = () => {
     setIsLoading(true)
@@ -39,7 +43,7 @@ function App() {
               A premium collection of high-performance React components built with Tailwind CSS.
             </p>
           </div>
-          <div className="h-0.5 w-full bg-gradient-to-r from-indigo-500 via-transparent to-transparent opacity-20" />
+          <div className="h-0.5 w-full bg-linear-to-r from-indigo-500 via-transparent to-transparent opacity-20" />
         </section>
 
         {/* Buttons */}
@@ -138,6 +142,59 @@ function App() {
           </div>
         </section>
 
+        {/* Toasts */}
+        <section className="space-y-8">
+          <div className="flex items-center gap-2">
+            <h3 className="text-xl font-semibold">Toast Notifications</h3>
+            <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] uppercase font-bold tracking-wider dark:bg-blue-900/30 dark:text-blue-400">Feedback</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-6">
+              <p className="text-sm font-medium text-zinc-500 mb-2 uppercase tracking-widest text-center">Trigger Toasts</p>
+              <div className="grid grid-cols-2 gap-4">
+                <Button variant="outline" onClick={() => toast({ title: "Default", description: "This is a default toast message." })}>
+                  Default
+                </Button>
+                <Button onClick={() => toast({ variant: "success", title: "Success!", description: "Everything went better than expected." })}>
+                  Success
+                </Button>
+                <Button variant="danger" onClick={() => toast({ variant: "error", title: "Error", description: "Something went wrong. Please try again." })}>
+                  Error
+                </Button>
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => toast({ variant: "info", title: "Information", description: "Here's some useful info for you." })}>
+                  Info
+                </Button>
+                <Button className="bg-amber-500 hover:bg-amber-600 text-white" onClick={() => toast({ variant: "warning", title: "Warning", description: "Be careful with this action." })}>
+                  Warning
+                </Button>
+                <Button variant="secondary" onClick={() => toast({ title: "Custom Icon", description: "Checking the system status...", duration: 5000 })}>
+                   <Terminal className="mr-2 h-4 w-4" /> Custom
+                </Button>
+              </div>
+            </div>
+            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-6">
+              <p className="text-sm font-medium text-zinc-500 mb-2 uppercase tracking-widest text-center">Positioning</p>
+              <div className="grid grid-cols-3 gap-2">
+                {(['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as ToasterPosition[]).map((pos) => (
+                  <Button 
+                    key={pos}
+                    variant={toastPosition === pos ? "primary" : "outline"}
+                    size="sm"
+                    className="text-[10px] h-8"
+                    onClick={() => {
+                        setToastPosition(pos);
+                        toast({ title: `Position: ${pos}`, description: `Toast will now appear at ${pos}` });
+                    }}
+                  >
+                    {pos}
+                  </Button>
+                ))}
+              </div>
+              <p className="text-xs text-zinc-500 text-center italic">Change the position and trigger a toast to see it in action.</p>
+            </div>
+          </div>
+        </section>
+
         {/* Info Cards */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
            <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -175,6 +232,7 @@ function App() {
           <p>© 2026 Antigravity Component Library. Built for Sabir.</p>
         </div>
       </footer>
+      <Toaster position={toastPosition} />
     </div>
   )
 }
