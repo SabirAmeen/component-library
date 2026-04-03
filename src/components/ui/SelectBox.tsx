@@ -5,11 +5,12 @@ export interface SelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
+  placeholder?: string;
   options?: { value: string; label: string }[];
 }
 
 const SelectBox = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, label, error, options = [], children, ...props }, ref) => {
+  ({ className, label, error, placeholder, options = [], children, ...props }, ref) => {
     return (
       <div className="flex flex-col gap-1.5 w-full">
         {label && (
@@ -20,13 +21,19 @@ const SelectBox = React.forwardRef<HTMLSelectElement, SelectProps>(
         <div className="relative">
           <select
             className={cn(
-              "flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
+              "flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all text-zinc-900",
               error && "border-red-500 focus-visible:ring-red-500",
               className
             )}
             ref={ref}
+            defaultValue=""
             {...props}
           >
+            {placeholder && (
+              <option value="" disabled hidden>
+                {placeholder}
+              </option>
+            )}
             {children || options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
