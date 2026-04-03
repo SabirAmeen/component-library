@@ -14,7 +14,8 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/component-library.css"
   },
   "scripts": {
     "dev": "vite",
@@ -30,7 +31,6 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.7.0",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
@@ -45,6 +45,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "lucide-react": "^1.7.0",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.2",
     "typescript": "~5.9.3",
