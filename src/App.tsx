@@ -4,7 +4,8 @@ import { Input } from './components/ui/Input'
 import { Checkbox } from './components/ui/Checkbox'
 import { Radio } from './components/ui/Radio'
 import { SelectBox } from './components/ui/SelectBox'
-import { Moon, Sun, CheckCircle, Info, AlertTriangle, Terminal } from 'lucide-react'
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownLabel, DropdownSeparator } from './components/ui/Dropdown'
+import { Moon, Sun, CheckCircle, Info, AlertTriangle, Terminal, ChevronDown } from 'lucide-react'
 import { Toaster } from './components/ui/Toaster'
 import { toast } from './hooks/use-toast'
 import type { ToasterPosition } from './components/ui/Toaster'
@@ -139,6 +140,43 @@ function App() {
                <option value="editor">Editor</option>
                <option value="viewer">Viewer</option>
             </SelectBox>
+          </div>
+        </section>
+
+        {/* Dropdown */}
+        <section className="space-y-8">
+          <div className="flex items-center gap-2">
+            <h3 className="text-xl font-semibold">Dropdown Menu</h3>
+            <span className="px-2 py-0.5 rounded-full bg-pink-100 text-pink-700 text-[10px] uppercase font-bold tracking-wider dark:bg-pink-900/30 dark:text-pink-400">Navigation</span>
+          </div>
+          <div className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-6 flex gap-4">
+            <Dropdown>
+              <DropdownTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-zinc-900 text-zinc-50 hover:bg-zinc-900/90 h-10 px-4 py-2 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90 dark:focus-visible:ring-zinc-300">
+                Options <ChevronDown className="ml-2 h-4 w-4" />
+              </DropdownTrigger>
+              <DropdownMenu>
+                <DropdownLabel>My Account</DropdownLabel>
+                <DropdownSeparator />
+                <DropdownItem>Profile</DropdownItem>
+                <DropdownItem>Billing</DropdownItem>
+                <DropdownItem>Team</DropdownItem>
+                <DropdownItem>Subscription</DropdownItem>
+                <DropdownSeparator />
+                <DropdownItem className="text-red-600 dark:text-red-400">Logout</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown>
+               <DropdownTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 h-10 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300">
+                  Actions <ChevronDown className="ml-2 h-4 w-4" />
+               </DropdownTrigger>
+               <DropdownMenu className="w-48">
+                  <DropdownItem>Edit</DropdownItem>
+                  <DropdownItem>Duplicate</DropdownItem>
+                  <DropdownSeparator />
+                  <DropdownItem>Archive</DropdownItem>
+                  <DropdownItem className="text-red-600 dark:text-red-400">Delete</DropdownItem>
+               </DropdownMenu>
+            </Dropdown>
           </div>
         </section>
 
