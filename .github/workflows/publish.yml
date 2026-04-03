@@ -41,3 +41,10 @@ jobs:
 
       - name: Push version bump
         run: git push
+
+      - name: Trigger Update in Consumer Repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
+          repository: sabirameen/component-library-user
+          event-type: library_published
