@@ -8,6 +8,7 @@ export interface ToastData {
   description?: string;
   variant?: ToastVariant;
   duration?: number;
+  open?: boolean;
 }
 
 type ActionType = "ADD_TOAST" | "UPDATE_TOAST" | "REMOVE_TOAST" | "DISMISS_TOAST";
@@ -114,7 +115,7 @@ export function useToast() {
         listeners.splice(index, 1);
       }
     };
-  }, [state]);
+  }, []);
 
   return {
     ...state,
@@ -138,6 +139,7 @@ function toast({ ...props }: Omit<ToastData, "id">) {
     toast: {
       ...props,
       id,
+      open: true,
     },
   });
 

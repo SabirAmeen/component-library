@@ -107,6 +107,7 @@ const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
         data-state={isActive ? 'active' : 'inactive'}
         className={cn(
           'mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300',
+          "animate-in fade-in-0 duration-300",
           className
         )}
         {...props}
