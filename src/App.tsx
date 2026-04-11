@@ -5,6 +5,7 @@ import { Checkbox } from './components/ui/Checkbox'
 import { Radio } from './components/ui/Radio'
 import { SelectBox } from './components/ui/SelectBox'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownLabel, DropdownSeparator } from './components/ui/Dropdown'
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselDots } from './components/ui/Carousel'
 import { Moon, Sun, CheckCircle, Info, AlertTriangle, Terminal, ChevronDown } from 'lucide-react'
 import { Toaster } from './components/ui/Toaster'
 import { toast } from './hooks/use-toast'
@@ -229,6 +230,60 @@ function App() {
                 ))}
               </div>
               <p className="text-xs text-zinc-500 text-center italic">Change the position and trigger a toast to see it in action.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Carousel */}
+        <section className="space-y-8">
+          <div className="flex items-center gap-2">
+            <h3 className="text-xl font-semibold">Carousel</h3>
+            <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-[10px] uppercase font-bold tracking-wider dark:bg-orange-900/30 dark:text-orange-400">Display</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Basic carousel */}
+            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-4">
+              <p className="text-sm font-medium text-zinc-500 mb-4 uppercase tracking-widest">Basic (with dots)</p>
+              <Carousel loop className="w-full">
+                <CarouselContent>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 text-2xl font-bold">Slide 1</div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-2xl font-bold">Slide 2</div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-pink-100 dark:bg-pink-950/40 text-pink-700 dark:text-pink-300 text-2xl font-bold">Slide 3</div>
+                  </CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+                <CarouselDots />
+              </Carousel>
+            </div>
+
+            {/* No-loop carousel */}
+            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-4">
+              <p className="text-sm font-medium text-zinc-500 mb-4 uppercase tracking-widest">No loop (buttons disable at edges)</p>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 text-2xl font-bold">Amber</div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300 text-2xl font-bold">Violet</div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-sky-100 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 text-2xl font-bold">Sky</div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="flex h-40 items-center justify-center rounded-xl bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 text-2xl font-bold">Rose</div>
+                  </CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+                <CarouselDots />
+              </Carousel>
             </div>
           </div>
         </section>
