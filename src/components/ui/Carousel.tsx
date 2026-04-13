@@ -53,13 +53,18 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
 
     const goTo = React.useCallback(
       (i: number) => {
-        setUncontrolled(i);
-        onIndexChange?.(i);
+        // Fix 1: guard against empty carousel (count === 0)
+        if (count === 0) return;
+        const clamped = Math.max(0, Math.min(i, count - 1));
+        setUncontrolled(clamped);
+        onIndexChange?.(clamped);
       },
-      [onIndexChange]
+      [count, onIndexChange]
     );
 
     const prev = React.useCallback(() => {
+      // Fix 1: guard against empty carousel
+      if (count === 0) return;
       const target = current - 1;
       if (target < 0) {
         if (loop) goTo(count - 1);
@@ -69,6 +74,8 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
     }, [current, count, loop, goTo]);
 
     const next = React.useCallback(() => {
+      // Fix 1: guard against empty carousel
+      if (count === 0) return;
       const target = current + 1;
       if (target >= count) {
         if (loop) goTo(0);
@@ -77,9 +84,22 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
       }
     }, [current, count, loop, goTo]);
 
-    // Keyboard navigation
+    // Fix 2: clamp current when count changes (e.g. slides removed, out-of-range defaultIndex)
+    React.useEffect(() => {
+      if (count > 0 && current >= count) {
+        const clamped = count - 1;
+        setUncontrolled(clamped);
+        onIndexChange?.(clamped);
+      }
+    }, [count, current, onIndexChange]);
+
+    // Fix 4: Guard keyboard handler — ignore events bubbling from interactive descendants
+    const INTERACTIVE_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A']);
     const handleKeyDown = React.useCallback(
       (e: React.KeyboardEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        if (INTERACTIVE_TAGS.has(target.tagName) || target.isContentEditable) return;
+
         if (orientation === 'horizontal') {
           if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
           else if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
@@ -129,8 +149,8 @@ const CarouselContent = React.forwardRef<HTMLDivElement, CarouselContentProps>(
     const slides = React.Children.toArray(children);
     const count = slides.length;
 
-    // Register slide count with parent
-    React.useLayoutEffect(() => {
+    // Fix 3: Replace useLayoutEffect with useEffect to avoid SSR warnings
+    React.useEffect(() => {
       setCount(count);
     }, [count, setCount]);
 
@@ -157,21 +177,26 @@ const CarouselContent = React.forwardRef<HTMLDivElement, CarouselContentProps>(
           )}
           style={{ transform: translateValue }}
         >
-          {slides.map((slide, i) => (
-            <div
-              key={i}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`Slide ${i + 1} of ${count}`}
-              aria-hidden={current !== i}
-              className={cn(
-                'min-w-0 shrink-0 grow-0 basis-full',
-                orientation === 'vertical' && 'min-h-0'
-              )}
-            >
-              {slide}
-            </div>
-          ))}
+          {slides.map((slide, i) => {
+            const isActive = current === i;
+            return (
+              <div
+                key={i}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${i + 1} of ${count}`}
+                aria-hidden={!isActive}
+                // Fix 5: inert prevents keyboard focus into hidden slides
+                {...(!isActive ? { inert: '' } : {})}
+                className={cn(
+                  'min-w-0 shrink-0 grow-0 basis-full',
+                  orientation === 'vertical' && 'min-h-0'
+                )}
+              >
+                {slide}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -286,16 +311,17 @@ CarouselNext.displayName = 'CarouselNext';
 
 // ─── Dots / Indicator ─────────────────────────────────────────────────────────
 
-export type CarouselDotsProps = React.HTMLAttributes<HTMLDivElement>;
+export type CarouselDotsProps = React.HTMLAttributes<HTMLElement>;
 
-const CarouselDots = React.forwardRef<HTMLDivElement, CarouselDotsProps>(
+const CarouselDots = React.forwardRef<HTMLElement, CarouselDotsProps>(
   ({ className, ...props }, ref) => {
     const { current, count, goTo } = useCarousel();
 
     return (
-      <div
-        ref={ref}
-        role="tablist"
+      // Fix 6: use <nav> + plain buttons instead of role=tablist/tab to avoid
+      // incomplete ARIA tabs pattern (no aria-controls, no tabpanel, no roving tabIndex)
+      <nav
+        ref={ref as React.Ref<HTMLElement>}
         aria-label="Slide indicators"
         className={cn('flex items-center justify-center gap-1.5 mt-3', className)}
         {...props}
@@ -304,9 +330,8 @@ const CarouselDots = React.forwardRef<HTMLDivElement, CarouselDotsProps>(
           <button
             key={i}
             type="button"
-            role="tab"
-            aria-selected={current === i}
             aria-label={`Go to slide ${i + 1}`}
+            aria-current={current === i ? 'true' : undefined}
             onClick={() => goTo(i)}
             className={cn(
               'h-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
@@ -316,7 +341,7 @@ const CarouselDots = React.forwardRef<HTMLDivElement, CarouselDotsProps>(
             )}
           />
         ))}
-      </div>
+      </nav>
     );
   }
 );
