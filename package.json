@@ -1,6 +1,6 @@
 {
   "name": "@sabirameen/component-library",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A premium React component library built with Tailwind CSS.",
   "type": "module",
   "files": [
