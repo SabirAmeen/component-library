@@ -187,7 +187,7 @@ const CarouselContent = React.forwardRef<HTMLDivElement, CarouselContentProps>(
                 aria-label={`Slide ${i + 1} of ${count}`}
                 aria-hidden={!isActive}
                 // Fix 5: inert prevents keyboard focus into hidden slides
-                {...(!isActive ? { inert: '' } : {})}
+                {...(!isActive ? { inert: true } : {})}
                 className={cn(
                   'min-w-0 shrink-0 grow-0 basis-full',
                   orientation === 'vertical' && 'min-h-0'
