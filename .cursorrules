@@ -1,0 +1,16 @@
+# AI Assistant Rules
+
+## Component Creation
+1. Whenever you are asked to create, generate, or add a new UI component inside the `src/components/` directory (especially `src/components/ui/`), you **MUST** automatically create a corresponding Storybook story for it.
+2. The story file MUST be named `[ComponentName].stories.tsx` and placed in the exact same folder as the component.
+3. The story MUST include:
+   - The default export that specifies `title`, `component`, `tags: ['autodocs']`, and parameters.
+   - Appropriate `argTypes` to document the props of the component.
+   - At least a `Default` story variant demonstrating the basic usage of the component.
+   - Any logically interesting or prominent states (e.g., Disabled, Error, With Icon, etc.) as additional story exports.
+
+## Styling & Framework
+- Wait for user instructions regarding generic Tailwind vs. raw CSS, but currently prefer standard raw CSS imports from `index.css` or generic utility classes as found in the repo.
+- Maintain existing codebase styles and import patterns.
+
+Always review `CONTRIBUTING.md` if you are unsure about the repository's guidelines.
