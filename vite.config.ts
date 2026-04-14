@@ -22,7 +22,7 @@ export default defineConfig({
   })],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(dirname, 'src/index.ts'),
       name: 'ComponentLibrary',
       formats: ['es', 'umd'],
       fileName: format => `index.${format}.js`
@@ -41,8 +41,8 @@ export default defineConfig({
   test: {
     projects: [
       {
-        name: 'unit',
         test: {
+          name: 'unit',
           environment: 'jsdom',
           setupFiles: ['./src/tests/setup.ts'],
           include: ['src/**/*.test.{ts,tsx}']
