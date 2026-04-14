@@ -1,0 +1,50 @@
+│
+▲  No story files found for the specified pattern: src/**/*.mdx
+
+ RUN  v4.1.4 /home/sabir/Documents/component-library
+
+ ❯ |0| src/components/ui/Dropdown.test.tsx (1 test | 1 failed) 26ms
+   × renders dropdown trigger 24ms
+ ❯ |0| src/components/ui/SelectBox.test.tsx (1 test | 1 failed) 30ms
+   × renders select button 28ms
+ ❯ |0| src/components/ui/Checkbox.test.tsx (2 tests | 1 failed) 207ms
+   ✓ renders checkbox 164ms
+   × can be checked 41ms
+ ✓ |0| src/components/ui/Button.test.tsx (2 tests) 205ms
+ ❯ |0| src/components/ui/Radio.test.tsx (2 tests | 2 failed) 38ms
+   × renders radio group and items 28ms
+   × handles value change 7ms
+ ❯ |0| src/components/ui/Toast.test.tsx (1 test | 1 failed) 22ms
+   × renders toast 20ms
+ ✓ |0| src/components/ui/Tabs.test.tsx (1 test) 294ms
+ ✓ |0| src/components/ui/Carousel.test.tsx (1 test) 48ms
+ ✓ |0| src/components/ui/Input.test.tsx (2 tests) 165ms
+ ✓ |0| src/components/ui/Toaster.test.tsx (1 test) 29ms
+ ✓ |storybook (chromium)| src/components/ui/Tabs.stories.tsx (1 test) 949ms
+   ✓ Default  945ms
+ ✓ |storybook (chromium)| src/components/ui/Carousel.stories.tsx (2 tests) 1561ms
+   ✓ Default  786ms
+   ✓ Looped  772ms
+ ✓ |storybook (chromium)| src/components/ui/Input.stories.tsx (5 tests) 1732ms
+   ✓ Default  620ms
+   ✓ With Label  903ms
+ ✓ |storybook (chromium)| src/components/ui/Toaster.stories.tsx (1 test) 1713ms
+   ✓ Default  1707ms
+ ✓ |storybook (chromium)| src/components/ui/SelectBox.stories.tsx (4 tests) 1790ms
+   ✓ Default  1315ms
+ ✓ |storybook (chromium)| src/components/ui/Toast.stories.tsx (5 tests) 1775ms
+   ✓ Default  1455ms
+ ✓ |storybook (chromium)| src/components/ui/Button.stories.tsx (10 tests) 2054ms
+   ✓ Primary  1162ms
+   ✓ Secondary  408ms
+ ✓ |storybook (chromium)| src/components/ui/Radio.stories.tsx (4 tests) 491ms
+ ✓ |storybook (chromium)| src/components/ui/Dropdown.stories.tsx (1 test) 482ms
+   ✓ Default  481ms
+ ✓ |storybook (chromium)| src/components/ui/Checkbox.stories.tsx (5 tests) 560ms
+   ✓ Default  332ms
+
+ Test Files  5 failed | 15 passed (20)
+      Tests  6 failed | 46 passed (52)
+   Start at  13:29:00
+   Duration  10.25s (transform 8.72s, setup 21.46s, import 13.54s, tests 14.17s, environment 13.53s)
+
